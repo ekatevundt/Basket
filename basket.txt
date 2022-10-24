@@ -1,4 +1,4 @@
-0 2 5 10 
+0 2 0 10 
 Pillow Mouse T-shirt Milk 
 100 200 300 50 
-false true true true 
+false true false true 

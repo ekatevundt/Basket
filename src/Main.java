@@ -10,15 +10,9 @@ public class Main {
         basket.addToCart(3, 10);
         basket.addToCart(1, 2);
         basket.printCart();
-        File file = new File("basket.txt");
-        basket.saveTxt(new File("basket.txt"));
+        basket.saveBin(new File("basket.bin"), basket);
         basket.addToCart(2, 5);
-        basket.saveTxt(new File("basket.txt"));
-        Basket.loadFromTxtFile(file);
-        Basket basket1 = Basket.loadFromTxtFile(file);
-        basket1.printCart();
-        basket.addToCart(0, 3);
-        basket.saveBin(new File("basket.bin"), basket1);
+        basket.printCart();
         Basket basket2 = Basket.loadFromBin(new File("basket.bin"));
         basket2.printCart();
 
