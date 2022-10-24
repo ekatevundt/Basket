@@ -14,7 +14,6 @@ public class Main {
         basket.saveTxt(new File("basket.txt"));
         basket.addToCart(2, 5);
         basket.saveTxt(new File("basket.txt"));
-        Basket.loadFromTxtFile(file);
         Basket basket1 = Basket.loadFromTxtFile(file);
         basket1.printCart();
 
