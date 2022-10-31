@@ -17,28 +17,25 @@ public class Main {
         basket.addToCart(3, 10);
         basket.addToCart(1, 2);
         basket.printCart();
-        String obj = String.valueOf(new JSONObject());
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        obj = gson.toJson(basket);
+        String obj = gson.toJson(basket);
         try (FileWriter file = new FileWriter("basket.json")) {
-            file.write(obj.toString());
+            file.write(obj);
             file.flush();
         } catch (IOException e) {
-            e.printStackTrace();}
-            File file = new File("basket.json");
-            //basket.saveTxt(new File("basket.txt"));
-            //basket.addToCart(2, 5);
-            // basket.saveTxt(new File("basket.txt"));
-            Basket basket1 = Basket.loadFromTxtFile(file);
-            basket1.addToCart(3,2);
-            basket1.printCart();
-            ClientLog allLog = new ClientLog();
-            allLog.log(4, 5);
-            allLog.log(3, 6);
-            allLog.log(4, 3);
-            allLog.exportAsCSV(new File("log.csv"));
-
-
+            e.printStackTrace();
         }
+        File file = new File("basket.json");
+        Basket basket1 = Basket.loadFromTxtFile(file);
+        basket1.addToCart(2, 2);
+        basket1.printCart();
+        ClientLog allLog = new ClientLog();
+        allLog.log(4, 5);
+        allLog.log(3, 6);
+        allLog.log(4, 3);
+        allLog.exportAsCSV(new File("log.csv"));
+
+
     }
+}

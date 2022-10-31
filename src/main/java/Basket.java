@@ -1,4 +1,7 @@
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.json.simple.parser.JSONParser;
@@ -8,6 +11,8 @@ import java.io.*;
 
 
 
+
+@JsonPropertyOrder({"prices","products", "totalBasket", "sum", "isFilled"})
 public class Basket implements Serializable {
     private int[] prices;
     private String[] products;
@@ -85,7 +90,7 @@ public class Basket implements Serializable {
 
         JSONParser parser = new JSONParser();
         if (textFile.exists()) {
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
             Object obj = parser.parse(new FileReader(textFile));
             String result = mapper.writeValueAsString(obj);
             return mapper.readValue(result, Basket.class);
