@@ -1,8 +1,14 @@
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
-public class Basket {
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.*;
+
+
+
+public class Basket implements Serializable {
     private int[] prices;
     private String[] products;
     private int[] totalBasket;
@@ -22,6 +28,17 @@ public class Basket {
         this.products = products;
         this.totalBasket = totalBasket;
         this.isFilled = isFilled;
+    }
+
+    public Basket(int[] prices, String[] products, int[] totalBasket, int sum, boolean[] isFilled) {
+        this.prices = prices;
+        this.products = products;
+        this.totalBasket = totalBasket;
+        this.sum = sum;
+        this.isFilled = isFilled;
+    }
+
+    public Basket() {
     }
 
 
@@ -64,43 +81,24 @@ public class Basket {
         }
     }
 
-    public static Basket loadFromTxtFile(File textFile) throws IOException {
+    public static Basket loadFromTxtFile(File textFile) throws IOException, ParseException {
 
-        String[] productsInBasket;
-        String[] productNames;
-        String[] pricesInBasket;
-        String[] isProduct;
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(textFile))) {
-            if (textFile.exists()) {
-                productsInBasket = reader.readLine().split(" ");
-                productNames = reader.readLine().split(" ");
-                pricesInBasket = reader.readLine().split(" ");
-                int[] pricesInt = new int[pricesInBasket.length];
-                for (int i = 0; i < pricesInBasket.length; i++) {
-                    pricesInt[i] = Integer.parseInt(pricesInBasket[i]);
-                }
-                Basket basket = new Basket(pricesInt, productNames);
-                for (int i = 0; i < productsInBasket.length; i++) {
-                    basket.totalBasket[i] = Integer.parseInt(productsInBasket[i]);
-                }
-
-                for (int i = 0; i < productNames.length; i++) {
-                    basket.products[i] = productNames[i];
-                }
-
-
-                isProduct = reader.readLine().split(" ");
-                for (int i = 0; i < isProduct.length; i++) {
-                    basket.isFilled[i] = Boolean.parseBoolean(isProduct[i]);
-                }
-                return basket;
-            } else {
-                return new Basket(null, null, null, null);
-            }
+        JSONParser parser = new JSONParser();
+        if (textFile.exists()) {
+            ObjectMapper mapper = new ObjectMapper();
+            Object obj = parser.parse(new FileReader(textFile));
+            String result = mapper.writeValueAsString(obj);
+            return mapper.readValue(result, Basket.class);
+        } else {
+            return new Basket(null, null, null, null);
         }
     }
 }
+
+
+
+
+
 
 
 
