@@ -10,9 +10,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 
 
-
-
-@JsonPropertyOrder({"prices","products", "totalBasket", "sum", "isFilled"})
+@JsonPropertyOrder({"prices", "products", "totalBasket", "sum", "isFilled"})
 public class Basket implements Serializable {
     private int[] prices;
     private String[] products;
